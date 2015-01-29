@@ -60,7 +60,12 @@ void Object_arrayAddItem(void *prv, JSOBJ obj, JSOBJ value)
 
 JSOBJ Object_newString(void *prv, wchar_t *start, wchar_t *end)
 {
-  return PyUnicode_FromWideChar (start, (end - start));
+  JSOBJ obj = PyUnicode_FromWideChar (start, (end - start));
+  JSOBJ obj_str = PyUnicode_AsASCIIString(obj);
+  if (obj_str == NULL)
+    return obj;
+  else
+    return obj_str;
 }
 
 JSOBJ Object_newTrue(void *prv)
