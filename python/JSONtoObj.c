@@ -61,7 +61,8 @@ void Object_arrayAddItem(void *prv, JSOBJ obj, JSOBJ value)
 JSOBJ Object_newString(void *prv, wchar_t *start, wchar_t *end)
 {
   JSOBJ obj = PyUnicode_FromWideChar (start, (end - start));
-  JSOBJ obj_str = PyUnicode_AsASCIIString(obj);
+  Py_ssize_t size = PyUnicode_GetSize(obj);
+  JSOBJ obj_str = PyUnicode_EncodeASCII(obj, size, NULL);
   if (obj_str == NULL)
     return obj;
   else
